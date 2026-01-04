@@ -20,40 +20,18 @@ brew install mariadb
 brew services start mariadb
 ```
 
+Claude.ai er mest sannsynlig den beste KI-tjenesten å spørre om hjelp om du får problemer med installasjon. 
+
 For å stoppe tjenesten senere:
 
 ```bash
 brew services stop mariadb
 ```
 
-### Første gangs sikkerhetskonfigurasjon
-
-Kjør sikkerhetsskriptet for å sette opp root-passord og fjerne testdatabaser:
-
-```bash
-mariadb-secure-installation
-```
-
-Følg instruksjonene på skjermen. Du vil bli bedt om å:
-- Sette et root-passord
-- Fjerne anonyme brukere
-- Deaktivere ekstern root-tilgang
-- Fjerne testdatabasen
-
-## 2. Koble til MariaDB
-
-### Koble til som root
-
-```bash
-mariadb -u root -p
-```
-
-Du vil bli bedt om å skrive inn passordet du opprettet under sikkerhetskonfigurasjonen.
-
 ### Koble til uten passord (hvis ikke satt opp)
 
 ```bash
-mariadb -u root
+sudo mariadb -u root
 ```
 
 ## 3. Opprette ny bruker med rettigheter
@@ -76,7 +54,7 @@ CREATE USER 'johndoe'@'localhost' IDENTIFIED BY 'MittPassord123!';
 GRANT ALL PRIVILEGES ON *.* TO 'brukernavn'@'localhost';
 ```
 
-### Gi spesifikke rettigheter til en database
+### (evt) Gi spesifikke rettigheter til en database
 
 ```sql
 GRANT SELECT, INSERT, UPDATE, DELETE ON database_navn.* TO 'brukernavn'@'localhost';
@@ -120,7 +98,13 @@ QUIT;
 
 eller bare trykk `Ctrl + D`
 
-## 5. Opprette en database
+Du kan nå logge inn igjen med din egen bruker. Man burde ikke bruke root til annet enn å administrere brukere. 
+
+```sql
+mariadb -u brukernavn -p
+```
+
+# 5. Opprette en database
 
 ### Vise eksisterende databaser
 
